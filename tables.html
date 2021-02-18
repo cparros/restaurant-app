@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>Restaurant</title>
+</head>
+<body>
+  <header class="jumbotron bg-dark">
+    <h1 style="color: aliceblue; text-align: center;">Hot Restaurant</h1>
+    <hr>
+    <h2 style="color: aliceblue; text-align: center;">We only have 5 seats left book your reservation now!</h2>  
+    <div class="d-flex justify-content-center"></div>
+      <button type="button" class="btn btn-primary">Home</button><button type="button" class="btn btn-danger">Make Reservation</button> 
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="card-header">
+      <p>Current Reservations</p>
+    </div>
+      <div class="card-body">
+        <h2 id="name"></h2>
+              <div id="stats">
+                <h3>
+                  <strong>Phone:</strong> <span id="phone"></span>
+                </h3>
+                <h3><strong>Email:</strong> <span id="email"></span></h3>
+                <h3>
+                  <strong>Unique Id:</strong>
+                  <span id="uniqueId"></span>
+                </h3>
+                </div>
+
+      </div>
+    </div>
+
+    <a href="#">API Table Link</a> || <a href="#">API Wait list</a>
+    <script type="text/javascript">
+    
+      // const searchBtn = document.getElementById('search-btn');
+      const statsEl = document.getElementById('stats');
+      const resName = document.getElementById('name');
+      const resPhone = document.getElementById('phone');
+      const resEmail = document.getElementById('email');
+      const resUniqueId = document.getElementById('uniqueId');
+     
+      
+  
+    fetch(`/api/reservations`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Here is the data');
+            console.log(data);
+            const { name, phone, email, uniqueId } = data;
+          
+              statsEl.setAttribute('style', 'display: inline')
+              resName.textContent = data[0].name;
+              resPhone.textContent = phone;
+              resEmail.textContent = email;
+              resUniqueId.textContent = uniqueId;
+           
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+   
+    </script>
+</body>
+</html>
